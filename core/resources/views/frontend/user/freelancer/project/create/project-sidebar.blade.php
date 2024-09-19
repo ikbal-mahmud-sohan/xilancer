@@ -19,6 +19,13 @@
                 <li class="single-setup-request-list-item">
                     <span class="single-setup-request-list-item-number"> 3 </span>
                     <div class="single-setup-request-list-item-contents">
+                        <h5 class="single-setup-request-list-item-contents-title">{{ __('Upload video') }}</h5>
+                        <p class="single-setup-request-list-item-contents-para">{{ __('Add a video to your project') }}</p>
+                    </div>
+                </li>
+                <li class="single-setup-request-list-item">
+                    <span class="single-setup-request-list-item-number"> 4 </span>
+                    <div class="single-setup-request-list-item-contents">
                         <h5 class="single-setup-request-list-item-contents-title">{{ __('Packages & charge') }}</h5>
                         <p class="single-setup-request-list-item-contents-para">{{ __('Add what you offer & your charges') }}</p>
                     </div>

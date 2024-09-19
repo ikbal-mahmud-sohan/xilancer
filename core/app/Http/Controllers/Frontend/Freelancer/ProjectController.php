@@ -41,6 +41,7 @@ class ProjectController extends Controller
                 'checkbox_or_numeric_title'=>'required|array|max:191',
                 'meta_title'=>'nullable|max:255',
                 'meta_description'=>'nullable|max:500',
+                'video'=>'nullable|mimes:mp4,avi,mov|max:20480',
             ]);
 
             if(get_static_option('project_auto_approval') == 'yes'){
@@ -88,6 +89,16 @@ class ProjectController extends Controller
                         $resize_full_image->save('assets/uploads/project' .'/'. $imageName);
                     }
                 }
+                // Handle video upload
+                    $videoName = '';
+                    if ($video = $request->file('video')) {
+                        $videoName = time().'-'.uniqid().'.'.$video->getClientOriginalExtension();
+                        if (cloudStorageExist() && in_array(Storage::getDefaultDriver(), ['s3', 'cloudFlareR2', 'wasabi'])) {
+                            add_frontend_cloud_image_if_module_exists($upload_folder, $video, $videoName, 'public');
+                        } else {
+                            $video->move('assets/uploads/project', $videoName);
+                        }
+                    }
 
                 $project = Project::create([
                     'user_id'=>$user_id,
@@ -118,6 +129,7 @@ class ProjectController extends Controller
                     'meta_title'=>$request->meta_title,
                     'meta_description'=>$request->meta_description,
                     'load_from' => in_array($storage_driver,['CustomUploader']) ? 0 : 1, //added for cloud storage 0=local 1=cloud
+                    'video' => $videoName,
                 ]);
                 $project->project_sub_categories()->attach($request->subcategory);
 
@@ -264,47 +276,13 @@ class ProjectController extends Controller
                         $imageName = $project_details->image;
                     }
                 }
-                    // sohan 
-                $videoName = '';
-                    $upload_folder = 'project';
-
-                    if (cloudStorageExist() && in_array(Storage::getDefaultDriver(), ['s3', 'cloudFlareR2', 'wasabi'])) {
-                        if ($video = $request->file('video')) {
-                            // Validate video file
-                            $request->validate([
-                                'video' => 'mimes:mp4,avi,mkv|max:10240', // 10MB max size
-                            ]);
-
-                            $videoName = time() . '-' . uniqid() . '.' . $video->getClientOriginalExtension();
-
-                            // Get the current video path from the database
-                            $currentVideoPath = $project_details->video;
-                            // Delete the old video if it exists
-                            if ($currentVideoPath) {
-                                delete_frontend_cloud_image_if_module_exists('project/' . $currentVideoPath);
-                            }
-
-                            // Upload the new video
+                    $videoName = '';
+                    if ($video = $request->file('video')) {
+                        $videoName = time().'-'.uniqid().'.'.$video->getClientOriginalExtension();
+                        if (cloudStorageExist() && in_array(Storage::getDefaultDriver(), ['s3', 'cloudFlareR2', 'wasabi'])) {
                             add_frontend_cloud_image_if_module_exists($upload_folder, $video, $videoName, 'public');
                         } else {
-                            $videoName = $project_details->video; // If no new video is uploaded, keep the old one
-                        }
-                    } else {
-                        if ($video = $request->file('video')) {
-                            $request->validate([
-                                'video' => 'mimes:mp4,avi,mkv|max:10240',
-                            ]);
-
-                            // Delete the old video if it exists
-                            if (file_exists('assets/uploads/project/' . $project_details->video)) {
-                                File::delete('assets/uploads/project/' . $project_details->video);
-                            }
-
-                            // Save new video
-                            $videoName = time() . '-' . uniqid() . '.' . $video->getClientOriginalExtension();
-                            $video->move(public_path('assets/uploads/project'), $videoName);
-                        } else {
-                            $videoName = $project_details->video; // If no new video, keep the existing one
+                            $video->move('assets/uploads/project', $videoName);
                         }
                     }
                     //  sohann 
