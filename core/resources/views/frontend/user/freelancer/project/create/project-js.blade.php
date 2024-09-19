@@ -486,39 +486,67 @@
             if (current <= Listings.length) {
                 current++
 
-                // todo add introduction
-                if(current == 1){
-                    let category = $('#category').val();
-                    let subcategory = $('#subcategory').val();
-                    let title = $('#project_title').val();
-                    let description = $('#project_description').val();
-                    if(category == '' || subcategory == '' || title == '' || description == ''){
-                        current = 0;
-                        toastr_warning_js("{{ __('Please fill all fields !') }}");
-                        return false;
+                 // Step 1: Validate category, subcategory, title, and description
+                    if(current == 1) {
+                        let category = $('#category').val();
+                        let subcategory = $('#subcategory').val();
+                        let title = $('#project_title').val();
+                        let description = $('#project_description').val();
+                        
+                        if(category == '' || subcategory == '' || title == '' || description == '') {
+                            current = 0;
+                            toastr_warning_js("{{ __('Please fill all fields!') }}");
+                            return false;
+                        }
+                        
+                        if(title.length < 5) {
+                            current = 0;
+                            toastr_warning_js("{{ __('Title must be at least 5 characters') }}");
+                            return false;
+                        }
+                        
+                        if(description.length < 10) {
+                            current = 0;
+                            toastr_warning_js("{{ __('Description must be at least 10 characters') }}");
+                            return false;
+                        }
+
+                        // Go to next step (Step 2: Image Upload)
+                        $('.setup-footer-right').html('<a href="javascript:void(0)" class="setup-footer-next next" id="next"> <i class="fas fa-arrow-right"></i> </a>');
                     }
-                    if(title.length < 5){
-                        current = 0;
-                        toastr_warning_js("{{ __('Title must be at least 5 characters') }}");
-                        return false;
+
+                    // Step 2: Validate Image
+                    else if(current == 2) {
+                        let image = $('#upload_project_photo').val();
+                        
+                        if(image == '') {
+                            current = 1;
+                            toastr_warning_js("{{ __('Please upload the project photo!') }}");
+                            return false;
+                        }
+
+                        // Go to next step (Step 3: Video Upload)
+                        $('.setup-footer-right').html('<a href="javascript:void(0)" class="setup-footer-next next" id="next"> <i class="fas fa-arrow-right"></i> </a>');
                     }
-                    if(description.length < 10){
-                        current = 0;
-                        toastr_warning_js("{{ __('Description must be at least 10 characters') }}");
-                        return false;
+
+                    // Step 3: Validate Video
+                    else if(current == 3) {
+                        let video = $('#upload_project_video').val();  // Video input field
+                        
+                        if(video == '') {
+                            current = 2;
+                            toastr_warning_js("{{ __('Please upload the project video!') }}");
+                            return false;
+                        }
+
+                        // Finalize and show "Create Project" button
+                        $('.setup-footer-right').html('<button type="submit" class="btn-profile btn-bg-1" id="confirm_create_project">{{ __('Create Project') }}<span id="project_create_load_spinner"></span></button>');
                     }
-                }
-                else if(current == 2){
-                    let image = $('#upload_project_photo').val();
-                    if(image == ''){
-                        current = 1;
-                        toastr_warning_js("{{ __('Please upload project photo !') }}");
-                        return false;
+
+                    // Else block for future steps, or just resetting the form footer
+                    else {
+                        $('.setup-footer-right').html('<a href="javascript:void(0)" class="setup-footer-next next" id="next"> <i class="fas fa-arrow-right"></i> </a>');
                     }
-                    $('.setup-footer-right').html('<button type="submit" class="btn-profile btn-bg-1" id="confirm_create_project">{{ __('Create Project') }}<span id="project_create_load_spinner"></span></button>');
-                }else{
-                    $('.setup-footer-right').html('<a href="javascript:void(0)" class="setup-footer-next next" id="next"> <i class="fas fa-arrow-right"></i> </a>');
-                }
             }
 
             toggleListings();

@@ -14,13 +14,13 @@
                     </video>
                 @else
                     @if($project_details->video)
-                        <video controls class="project_video_preview">
-                            <source src="{{ asset('core/public/assets/uploads/project/'.$project_details->video) }}" type="video/mp4">
+                        <video controls class="project_video_preview" style="width:100%">
+                            <source  src="{{ asset('assets/uploads/project/'.$project_details->video) }}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     @else
                         <video controls class="project_video_preview">
-                            <source src="" type="video/mp4">
+                            <source src="" type="video/mp4" >
                             Your browser does not support the video tag.
                         </video>
                     @endif

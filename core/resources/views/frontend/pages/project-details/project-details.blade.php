@@ -296,7 +296,7 @@
                                         @if(cloudStorageExist() && in_array(Storage::getDefaultDriver(), ['s3', 'cloudFlareR2', 'wasabi']))
                                             <source src="{{ Storage::url('project/'.$project->video) }}" type="video/mp4">
                                         @else
-                                            <source src="{{ asset('core/public/assets/uploads/project/'.$project->video) }}" type="video/mp4">
+                                            <source src="{{ asset('assets/uploads/project/'.$project->video) }}" type="video/mp4">
                                         @endif
                                         {{ __('Your browser does not support the video tag.') }}
                                     </video>

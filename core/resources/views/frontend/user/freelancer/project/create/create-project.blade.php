@@ -23,6 +23,7 @@
 
                             @include('frontend.user.freelancer.project.create.project-introduction')
                             @include('frontend.user.freelancer.project.create.project-image')
+                            @include('frontend.user.freelancer.project.create.projects-video')
                             @include('frontend.user.freelancer.project.create.project-package-charge')
                             @include('frontend.user.freelancer.project.create.project-footer')
                         </form>

@@ -29,7 +29,7 @@
                                 @if($project->video)
                                     <!-- Show Video if available -->
                                     <video controls class="single-project-thumb">
-                                        <source src="{{ url('core/public/assets/uploads/project/'.$project->video) }}" type="video/mp4">
+                                        <source src="{{ url('assets/uploads/project/'.$project->video) }}" type="video/mp4">
                                         {{ __('Your browser does not support the video tag.') }}
                                     </video>
                                 @else
