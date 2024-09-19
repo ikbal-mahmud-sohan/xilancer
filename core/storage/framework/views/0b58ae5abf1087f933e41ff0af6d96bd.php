@@ -1,0 +1,2 @@
+<link rel="stylesheet" href="<?php echo e(asset('assets/backend/css/summernote-lite.min.css')); ?>">
+<?php /**PATH /Users/mac/Desktop/Laravel/xilancer-v2.9.0/core/resources/views/components/summernote/summernote-css.blade.php ENDPATH**/ ?>

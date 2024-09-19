@@ -1,0 +1,2 @@
+<a href="javascript:void(0)" class="<?php echo e($class ?? ''); ?>"> <?php echo e($title ?? ''); ?> </a>
+<?php /**PATH /Users/mac/Desktop/Laravel/xilancer-v2.9.0/core/resources/views/components/btn/close.blade.php ENDPATH**/ ?>

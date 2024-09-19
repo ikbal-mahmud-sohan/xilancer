@@ -1,0 +1,2 @@
+<script src="<?php echo e(asset('assets/common/js/sweetalert2.js')); ?>"></script>
+<?php /**PATH /Users/mac/Desktop/Laravel/xilancer-v2.9.0/core/resources/views/components/sweet-alert/sweet-alert2-js.blade.php ENDPATH**/ ?>

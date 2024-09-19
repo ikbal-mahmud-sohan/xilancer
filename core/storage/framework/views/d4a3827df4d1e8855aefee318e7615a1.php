@@ -1,0 +1,2 @@
+<button type="submit" class="<?php echo e($class ?? ''); ?>"><?php echo e($title ?? ''); ?></button>
+<?php /**PATH /Users/mac/Desktop/Laravel/xilancer-v2.9.0/core/resources/views/components/btn/submit.blade.php ENDPATH**/ ?>
